@@ -8,7 +8,7 @@
 
 // 在常规编程中，为了避免临时对象创建的开销，常用包含计算的赋值运算符来代替纯粹的赋值运算符
 
-// 在模板实参中编码表达式
+// 在模板实参中编码表达式，例如计算 1.2 * x + x * y 可以转化成 A_Add< A_Multi < A_Scalar<double>, Array<double> >, A_Multi < Array<double>, Array<double> > >
 
 #include "stddef.h"
 #include "cassert"
@@ -54,7 +54,7 @@ public:
     }
 
     T operator[] (size_t idx) const {
-        return op1[idx] + op2[idx]
+        return op1[idx] + op2[idx];
     }
 
     size_t size() const {
@@ -70,12 +70,12 @@ private:
     typename A_Traits<OP2>::ExprRef op2;
 
 public:
-    A_Add (OP1 const& a, OP2 const& b) : op1(a), op2(b) {
+    A_Multi (OP1 const& a, OP2 const& b) : op1(a), op2(b) {
 
     }
 
     T operator[] (size_t idx) const {
-        return op1[idx] * op2[idx]
+        return op1[idx] * op2[idx];
     }
 
     size_t size() const {
@@ -83,3 +83,8 @@ public:
         return op1.size()!=0? op1.size() : op2.size();
     }
 };
+
+int main()
+{
+    return 0;
+}
